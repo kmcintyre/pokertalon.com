@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en-US">
+<head>
+<title>Logos</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<meta name="description" content="blank">
+<meta name="keywords" content="blank">
+<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Courgette">
+<script
+	src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function() {
+		var txtCircle = function(ctx, txt,x,y,radius,ang,pos,clockwise) {
+			console.log(txt);
+			ctx.save();
+			ctx.translate(x,y);						
+			if ( !txt ) txt = 'undef';
+			ctx.textAlign = (pos.textAlign?pos.textAlign:"left");
+			ctx.textBaseline = (pos.textBaseline?pos.textBaseline:'middle');
+			ctx.font = (pos.font?pos.font:"normal normal 24pt Courgette"); 
+			ctx.fillStyle = (pos.color?pos.color:'white');
+			
+			if ( pos.align == "center" && clockwise ) {				  
+				ctx.rotate(ang+Math.PI/2-ctx.measureText(txt).width/radius/2);
+			} else if ( pos.align == "center" ) {				  
+				ctx.rotate(ang-Math.PI/2+ctx.measureText(txt).width/radius/2);
+			} else if ( pos.align == "right" && clockwise ) {
+				ctx.rotate(ang+Math.PI/2-ctx.measureText(txt).width/radius);
+			} else if ( pos.align == "right") {
+				ctx.rotate(ang-Math.PI/2+ctx.measureText(txt).width/radius);
+			} else if ( clockwise ) {
+				ctx.rotate(ang+Math.PI/2);
+			} else {
+				ctx.rotate(ang-Math.PI/2);
+			}
+			for ( var c = 0; c < txt.length; c++) {
+				if ( clockwise ) {
+					ctx.fillText(txt[c], 0, -radius);
+				} else {
+					ctx.fillText(txt[c], 0, radius);
+				}
+				var rot = ctx.measureText(txt[c]).width/radius;
+				if ( clockwise ) {
+					ctx.rotate(+rot);
+				} else {
+					ctx.rotate(-rot);
+				}				
+			}
+			ctx.restore();
+	  	};
+	  	
+	var ctx1 = $('#logo')[0].getContext('2d');
+	drawing1 = new Image()
+	drawing1.onload = function() {
+		ctx1.drawImage(drawing1,0,-8,520,185);
+		txtCircle(ctx1, "Projects", 225, 504, 500, -Math.PI*4.35/8,
+			{font:"normal normal 22pt Courgette", align:'left',textBaseline:'top', color:'#d40000'}, 
+			true 
+		);			
+      	};
+      	drawing1.src = "projects-3.png";
+
+	var ctx3 = $('#logo3')[0].getContext('2d');
+		txtCircle(ctx3, "Professional", 125, 477, 475, -Math.PI*4.49/8,
+		{font:"normal normal 20pt Courgette", align:'left',textBaseline:'top', color:'gray'}, 
+			true 
+		);			
+		
+  		ctx3.font = "normal normal 20pt Courgette";
+  		ctx3.fontColor = 'gray';
+  		ctx3.fillText("Experience", 180, 25);
+  		
+	var ctx2 = $('#logo2')[0].getContext('2d');
+	drawing2 = new Image()
+	drawing2.onload = function() {
+		ctx2.drawImage(drawing2,0,0,600,257);
+	};
+    drawing2.src = "projects-2.png";
+
+
+	var ctx4 = $('#logo4')[0].getContext('2d');
+	ctx4.moveTo(20,20)
+	drawing4 = new Image();
+	drawing4.onload = function() {
+		ctx4.drawImage(drawing4,0,0,40,40);
+		//ctx4.moveTo(20,20)
+		//ctx4.rotate('33deg');
+		ctx4.save();
+		//ctx4.rotate(1);
+		ctx4.drawImage(drawing4,20,20,40,40);
+		ctx4.restore();
+	};
+    drawing4.src = "chip.svg";
+      	
+});
+</script>
+</head>
+<body>
+	
+	<canvas id="logo" width="500" height="35" style="border:1px solid black"></canvas>
+	
+	<div style="border:1px solid black"><canvas id="logo2" width="600" height="257"></canvas></div>
+
+    	        
+    <canvas id="logo3" width="500" height="35" style="border:1px solid black"></canvas>
+    <div style="border:1px solid black"><canvas id="logo4" width="200" height="200"></canvas></div>
+    
+    <img src="AngelGuillen25.png"/>
+</body>
+</html>
